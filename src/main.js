@@ -1,14 +1,14 @@
-const DEFAULT_FORM_ACTION = "https://formsubmit.co/thespencerlowe@gmail.com";
+import {
+  DEFAULT_FORM_ACTION,
+  KEYS,
+  ajaxFormUrl,
+  isAcknowledgedSuccess,
+  parseJsonSafe,
+  revealPanel,
+  scoreFromAnswers,
+} from "./compatlab.js";
+
 const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || DEFAULT_FORM_ACTION;
-
-const KEYS = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"];
-
-const BANDS = [
-  { max: 39, label: "Inspector-only" },
-  { max: 69, label: "Partial" },
-  { max: 89, label: "Fragile ship" },
-  { max: 100, label: "Multi-client ready" },
-];
 
 const form = document.getElementById("priestley-form");
 const success = document.getElementById("form-success");
@@ -23,6 +23,7 @@ const scoreBandEl = document.getElementById("score-band");
 const scoreProgressEl = document.getElementById("score-progress");
 const scoreInvite = document.getElementById("score-invite");
 const scoreInviteText = document.getElementById("score-invite-text");
+const scoreFinalEl = document.getElementById("score-final");
 
 form.action = FORM_ENDPOINT;
 
@@ -33,22 +34,14 @@ function answers() {
   });
 }
 
-function bandFor(total) {
-  return BANDS.find((band) => total <= band.max).label;
-}
-
 function syncScore() {
-  const vector = answers();
-  const answered = vector.filter((value) => value !== null);
-  const yesCount = answered.filter((value) => value === "Y").length;
-  const total = yesCount * 10;
-  const complete = answered.length === KEYS.length;
+  const result = scoreFromAnswers(answers());
 
-  scoreProgressEl.textContent = `${answered.length} / 10 answered`;
+  scoreProgressEl.textContent = `${result.answered} / 10 answered`;
 
-  if (!answered.length) {
+  if (!result.answered) {
     scoreTotalEl.textContent = "—";
-    scoreBandEl.textContent = "Answer to score";
+    scoreBandEl.textContent = "Answer to see a running total";
     scoreBandEl.dataset.band = "";
     scoreInvite.hidden = true;
     scoreTotalField.value = "";
@@ -56,27 +49,38 @@ function syncScore() {
     return;
   }
 
-  scoreTotalEl.textContent = String(total);
-  scoreBandEl.textContent = complete ? bandFor(total) : "Score updates as you answer";
-  scoreBandEl.dataset.band = complete ? bandFor(total) : "";
-
-  if (complete) {
+  if (result.complete) {
+    const scored = `${result.total}\u00a0/\u00a0100`;
+    scoreTotalEl.textContent = scored;
+    scoreBandEl.textContent = result.band;
+    scoreBandEl.dataset.band = result.band;
     scoreInvite.hidden = false;
-    scoreInviteText.textContent = `Your Compat Blind Spot Score is ${total} — ${bandFor(total)}. Share this score and your answers via the Priestley form.`;
-    scoreTotalField.value = String(total);
-    scoreVectorField.value = vector.join("/");
+    scoreFinalEl.textContent = scored;
+    scoreInviteText.textContent = `Your MCP Client Readiness Score is ${scored} — ${result.band}. Share this self-assessment with the waitlist form.`;
+    scoreTotalField.value = String(result.total);
+    scoreVectorField.value = result.vector;
     sourceField.value = "compatlab-scorecard";
-  } else {
-    scoreInvite.hidden = true;
-    scoreTotalField.value = answered.length ? String(total) : "";
-    scoreVectorField.value = vector.map((value) => value ?? "-").join("/");
+    return;
   }
+
+  scoreTotalEl.textContent = String(result.total);
+  scoreBandEl.textContent = "Partial — finish all 10 to see a completed band";
+  scoreBandEl.dataset.band = "";
+  scoreInvite.hidden = true;
+  scoreTotalField.value = String(result.total);
+  scoreVectorField.value = result.vector;
 }
 
 function setSource(source) {
   if (!scoreInvite || scoreInvite.hidden) {
     sourceField.value = source;
   }
+}
+
+function showFormError(message) {
+  formError.hidden = false;
+  formError.textContent = message;
+  formError.focus();
 }
 
 document.querySelectorAll("[data-source]").forEach((link) => {
@@ -87,74 +91,61 @@ document.querySelectorAll("[data-source]").forEach((link) => {
 
 document.getElementById("score-items").addEventListener("change", syncScore);
 
-form.addEventListener("submit", async (event) => {
-  formError.hidden = true;
+let sending = false;
 
-  timestampField.value = new Date().toISOString();
-  if (!scoreVectorField.value) {
-    scoreVectorField.value = answers()
-      .map((value) => value ?? "-")
-      .join("/");
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (sending) {
+    return;
   }
+
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    form.querySelector(":invalid")?.focus();
+    return;
+  }
+
+  formError.hidden = true;
+  timestampField.value = new Date().toISOString();
+
+  if (!scoreVectorField.value) {
+    scoreVectorField.value = scoreFromAnswers(answers()).vector;
+  }
+
   if (!sourceField.value) {
     sourceField.value = "compatlab-waitlist";
   }
 
-  event.preventDefault();
+  sending = true;
   submitBtn.disabled = true;
   submitBtn.textContent = "Sending…";
 
   const payload = new FormData(form);
-  payload.delete("_honey");
 
   try {
-    const ajaxUrl = FORM_ENDPOINT.includes("formsubmit.co/")
-      ? FORM_ENDPOINT.replace("formsubmit.co/", "formsubmit.co/ajax/")
-      : FORM_ENDPOINT;
-
-    const response = await fetch(ajaxUrl, {
+    const response = await fetch(ajaxFormUrl(FORM_ENDPOINT), {
       method: "POST",
       headers: { Accept: "application/json" },
       body: payload,
     });
+    const body = await parseJsonSafe(response);
 
-    if (!response.ok) {
+    if (!isAcknowledgedSuccess(response.ok, body)) {
       throw new Error("submit_failed");
     }
 
     form.hidden = true;
-    success.hidden = false;
-    success.scrollIntoView({ behavior: "smooth", block: "center" });
+    revealPanel(success);
   } catch {
-    throwNativeSubmit(form);
+    showFormError(
+      "We couldn't send your answers. Check your connection and try again.",
+    );
   } finally {
+    sending = false;
     submitBtn.disabled = false;
-    submitBtn.textContent = "Send my score & answers";
+    submitBtn.textContent = "Join the waitlist";
   }
 });
-
-function throwNativeSubmit(target) {
-  const native = document.createElement("form");
-  native.action = FORM_ENDPOINT;
-  native.method = "POST";
-  native.style.display = "none";
-
-  for (const [name, value] of new FormData(target)) {
-    if (name === "_honey") continue;
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = name;
-    input.value = value;
-    native.appendChild(input);
-  }
-
-  document.body.appendChild(native);
-  native.submit();
-}
-
-if (new URLSearchParams(window.location.search).has("submitted")) {
-  form.hidden = true;
-  success.hidden = false;
-}
 
 syncScore();

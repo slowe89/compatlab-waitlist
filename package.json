@@ -3,11 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "CompatLab Priestley demand-test interest page",
+  "description": "CompatLab demand-test waitlist for remote MCP compatibility testing",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test src/compatlab.test.js"
   },
   "devDependencies": {
     "vite": "^7.1.5"
