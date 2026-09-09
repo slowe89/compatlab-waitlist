@@ -56,5 +56,6 @@ This is a waitlist / score follow-up page only. Packaging is unproven.
 Browser-verified shots of the shipped page:
 
 - [docs/hero.png](docs/hero.png) — hero
-- [docs/scorecard.png](docs/scorecard.png) — Compat Blind Spot Scorecard (interactive)
+- [docs/scorecard.png](docs/scorecard.png) — Compat Blind Spot Scorecard (score 70, Fragile ship)
 - [docs/form.png](docs/form.png) — Priestley form
+- [docs/hero-mobile.png](docs/hero-mobile.png) — mobile hero

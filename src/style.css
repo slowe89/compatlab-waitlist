@@ -133,6 +133,7 @@ a {
 .audience,
 .site-footer {
   padding: 4.5rem 0;
+  scroll-margin-top: 4.5rem;
 }
 
 .hero {
@@ -251,7 +252,7 @@ label.radio:has(input:focus-visible),
 
 .fail-map li {
   display: grid;
-  grid-template-columns: 8.5rem 1fr;
+  grid-template-columns: 9.25rem 1fr;
   gap: 0.6rem;
   align-items: center;
 }
@@ -260,6 +261,7 @@ label.radio:has(input:focus-visible),
   font-family: var(--mono);
   font-size: 0.78rem;
   color: var(--ink-2);
+  white-space: nowrap;
 }
 
 .fail-map .cell {
@@ -278,10 +280,6 @@ label.radio:has(input:focus-visible),
   color: #ffb3bb;
 }
 
-.fail-map .skip {
-  background: #2a2438;
-  color: #d6c6ff;
-}
 
 .bullet-grid {
   list-style: none;
