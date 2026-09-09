@@ -53,11 +53,9 @@ This is a waitlist / score follow-up page only. Packaging is unproven. No paymen
 
 ## Preview
 
-Browser-verified shots of the polished page:
+Browser-verified shots of the polished page live in `docs/polish-qa/`:
 
-- [docs/polish-qa/hero-desktop.png](docs/polish-qa/hero-desktop.png)
-- [docs/polish-qa/hero-mobile.png](docs/polish-qa/hero-mobile.png)
-- [docs/polish-qa/pricing-mobile.png](docs/polish-qa/pricing-mobile.png)
-- [docs/polish-qa/scorecard-desktop.png](docs/polish-qa/scorecard-desktop.png)
-- [docs/polish-qa/form-desktop.png](docs/polish-qa/form-desktop.png)
-- [docs/polish-qa/form-success.png](docs/polish-qa/form-success.png)
+- [hero-desktop.png](docs/polish-qa/hero-desktop.png) / [hero-mobile.png](docs/polish-qa/hero-mobile.png) / [hero-320.png](docs/polish-qa/hero-320.png)
+- [pricing-desktop.png](docs/polish-qa/pricing-desktop.png) / [pricing-mobile.png](docs/polish-qa/pricing-mobile.png)
+- [scorecard-desktop.png](docs/polish-qa/scorecard-desktop.png) / [scorecard-mobile.png](docs/polish-qa/scorecard-mobile.png)
+- [form-desktop.png](docs/polish-qa/form-desktop.png) / [form-success.png](docs/polish-qa/form-success.png) / [form-error.png](docs/polish-qa/form-error.png)
