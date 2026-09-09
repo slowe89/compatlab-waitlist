@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CompatLab — client-compatibility ship lab for remote MCP</title>
+    <meta
+      name="description"
+      content="CompatLab runs your remote MCP through the clients your users actually use — Cursor, VS Code, Claude Desktop/Code — and returns a client-by-client failure map + fix brief before OAuth drift kills adoption."
+    />
+    <meta name="theme-color" content="#0b1020" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="CompatLab — Inspector green ≠ ship-ready" />
+    <meta
+      property="og:description"
+      content="CompatLab runs your remote MCP through the clients your users actually use and returns a client-by-client failure map + fix brief."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="#top">Compat<span>Lab</span></a>
+        <p class="demand-badge">Demand test</p>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="wrap hero-grid">
+          <div>
+            <p class="eyebrow">DFY MCP client-compatibility ship lab</p>
+            <h1>Inspector green ≠ ship-ready.</h1>
+            <p class="subhead">
+              CompatLab runs your remote MCP through the clients your users actually use —
+              Cursor, VS Code, Claude Desktop/Code — and returns a client-by-client failure
+              map + fix brief before OAuth drift kills adoption.
+            </p>
+            <div class="cta-row">
+              <a class="btn primary" href="#scorecard" data-source="compatlab-scorecard"
+                >Get your Compat Blind Spot Score (free)</a
+              >
+              <a class="btn secondary" href="#waitlist" data-source="compatlab-waitlist"
+                >Join waitlist for a Ship pack</a
+              >
+            </div>
+          </div>
+          <aside class="fail-map" aria-label="Example client failure map">
+            <p class="fail-map-label">example failure map</p>
+            <ul>
+              <li>
+                <span class="client">Inspector</span>
+                <span class="cell pass">green</span>
+              </li>
+              <li>
+                <span class="client">Cursor</span>
+                <span class="cell fail">needs-auth loop</span>
+              </li>
+              <li>
+                <span class="client">VS Code</span>
+                <span class="cell fail">PRM slash miss</span>
+              </li>
+              <li>
+                <span class="client">Claude Desktop</span>
+                <span class="cell fail">DCR callback</span>
+              </li>
+              <li>
+                <span class="client">Claude Code</span>
+                <span class="cell fail">cold restart</span>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="bullets" id="why">
+        <div class="wrap">
+          <ol class="bullet-grid">
+            <li>
+              <h2>Real-client matrix — not Inspector-only.</h2>
+              <p>
+                We connect through Cursor, VS Code, Claude Desktop, and Claude Code so you
+                see which clients actually ship — not the Inspector row that stayed green.
+              </p>
+            </li>
+            <li>
+              <h2>Catch silent auth poison</h2>
+              <p>
+                Trailing-slash PRM mismatches, cached needs-auth skips, DCR/discovery
+                regressions. The Ship pack is a failure map + fix brief, not another
+                “works in Inspector” thread.
+              </p>
+            </li>
+            <li>
+              <h2>Retest when clients churn</h2>
+              <p>
+                Optional monthly re-run when client MCP auth surfaces move — so last
+                month’s connect does not become this month’s poisoned cache.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="pricing" id="ranges">
+        <div class="wrap">
+          <p class="table-label">early demand-test ranges — not a cart</p>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Offer</th>
+                  <th scope="col">Soft range</th>
+                  <th scope="col">What they get</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ship pack</td>
+                  <td>$1,497–$2,997</td>
+                  <td>Client-by-client failure map + fix brief</td>
+                </tr>
+                <tr>
+                  <td>Retest retainer</td>
+                  <td>$497–$997/mo</td>
+                  <td>Optional monthly re-run when clients churn</td>
+                </tr>
+                <tr>
+                  <td>Security add-on</td>
+                  <td>+$997</td>
+                  <td>Auth-surface review on top of the Ship pack</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="pricing-note">UNPROVEN — demand test. No checkout on this page.</p>
+        </div>
+      </section>
+
+      <section class="scorecard" id="scorecard">
+        <div class="wrap">
+          <div class="scorecard-head">
+            <div>
+              <p class="eyebrow">Client-side · 10 items · Yes = 10 · No = 0</p>
+              <h2>Compat Blind Spot Scorecard</h2>
+              <p class="lede">
+                Answer yes or no. Your total is 0–100. After you score, share it with the
+                Priestley form below if you want a Ship pack conversation.
+              </p>
+            </div>
+            <aside class="score-readout" aria-live="polite">
+              <p class="score-number" id="score-total">—</p>
+              <p class="score-band" id="score-band">Answer to score</p>
+              <p class="score-progress" id="score-progress">0 / 10 answered</p>
+            </aside>
+          </div>
+
+          <ol class="items" id="score-items">
+            <li data-key="q1">
+              <fieldset>
+                <legend>Public remote MCP URL (not stdio-only)</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q1" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q1" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q2">
+              <fieldset>
+                <legend>
+                  Tested connect in ≥2 of Cursor / VS Code / Claude Desktop / Claude Code
+                </legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q2" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q2" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q3">
+              <fieldset>
+                <legend>OAuth/static headers work after cold restart</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q3" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q3" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q4">
+              <fieldset>
+                <legend>Recovered from poisoned/cached needs-auth or documented recovery</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q4" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q4" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q5">
+              <fieldset>
+                <legend>PRM / resource URL trailing-slash checked per client</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q5" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q5" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q6">
+              <fieldset>
+                <legend>DCR/IdP callbacks cover every auth surface</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q6" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q6" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q7">
+              <fieldset>
+                <legend>Failures name broken client step</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q7" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q7" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q8">
+              <fieldset>
+                <legend>Written matrix newer than 30 days</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q8" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q8" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q9">
+              <fieldset>
+                <legend>Stranger can connect from README alone</legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q9" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q9" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+            <li data-key="q10">
+              <fieldset>
+                <legend>
+                  Named owner + cadence to retest on client MCP auth changelogs
+                </legend>
+                <div class="yn">
+                  <label><input type="radio" name="maturity-q10" value="Y" /> Yes</label>
+                  <label><input type="radio" name="maturity-q10" value="N" /> No</label>
+                </div>
+              </fieldset>
+            </li>
+          </ol>
+
+          <p class="band-key">
+            Bands: 0–39 Inspector-only · 40–69 Partial · 70–89 Fragile ship · 90–100
+            Multi-client ready
+          </p>
+
+          <div class="score-invite" id="score-invite" hidden>
+            <p id="score-invite-text"></p>
+            <a class="btn primary" href="#waitlist" data-source="compatlab-scorecard"
+              >Share score + answers via the form</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="waitlist" id="waitlist">
+        <div class="wrap">
+          <p class="eyebrow">Priestley interview</p>
+          <h2>CompatLab waitlist / score follow-up</h2>
+          <p class="lede">
+            Required: email, Q1–Q5, and a budget band. Optional MCP URL and client
+            checkboxes help us see whether a Ship pack is even the right shape.
+          </p>
+
+          <div class="success" id="form-success" hidden>
+            <p>
+              Got it — we will reply from thespencerlowe@gmail.com if you are a fit for a
+              Ship pack.
+            </p>
+          </div>
+
+          <form
+            id="priestley-form"
+            class="priestley"
+            action="https://formsubmit.co/thespencerlowe@gmail.com"
+            method="POST"
+          >
+            <input type="hidden" name="_subject" value="CompatLab waitlist" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" />
+            <input type="hidden" name="source" id="meta-source" value="compatlab-waitlist" />
+            <input type="hidden" name="score_total" id="meta-score-total" value="" />
+            <input type="hidden" name="score_vector" id="meta-score-vector" value="" />
+            <input type="hidden" name="timestamp" id="meta-timestamp" value="" />
+
+            <div class="field">
+              <label for="email">Work email <span class="req">required</span></label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                placeholder="you@company.com"
+              />
+            </div>
+
+            <div class="field">
+              <label for="q1"
+                >1. Current MCP auth / client-compatibility situation?
+                <span class="req">required</span></label
+              >
+              <textarea
+                id="q1"
+                name="q1_situation"
+                rows="4"
+                required
+                placeholder="e.g. Inspector is green; Cursor loops on needs-auth; we have not tested Claude Desktop…"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="q2"
+                >2. Specific result most wanted?
+                <span class="req">required</span></label
+              >
+              <textarea
+                id="q2"
+                name="q2_result"
+                rows="4"
+                required
+                placeholder="e.g. a client-by-client failure map; a cold-restart auth fix; proof a stranger can connect from the README…"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="q3"
+                >3. Tried before (Inspector-only, DIY, mcp-remote) and what still fails?
+                <span class="req">required</span></label
+              >
+              <textarea
+                id="q3"
+                name="q3_tried"
+                rows="4"
+                required
+                placeholder="Inspector-only, DIY client checks, mcp-remote — and what still fails…"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="q4"
+                >4. Budget if we prove multi-client ship readiness?
+                <span class="req">required</span></label
+              >
+              <textarea
+                id="q4"
+                name="q4_budget"
+                rows="4"
+                required
+                placeholder="rough $ is fine; “unknown but blocking launch” is fine"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label for="q5">5. Anything else? <span class="req">required</span></label>
+              <textarea
+                id="q5"
+                name="q5_else"
+                rows="4"
+                required
+                placeholder="constraints, deadlines, IdP, or “nothing else”"
+              ></textarea>
+            </div>
+
+            <fieldset class="field radios">
+              <legend>Budget band <span class="req">required</span></legend>
+              <label class="radio"
+                ><input type="radio" name="budget_band" value="Under $300" required /> Under
+                $300</label
+              >
+              <label class="radio"
+                ><input type="radio" name="budget_band" value="$300–$799" /> $300–$799</label
+              >
+              <label class="radio"
+                ><input type="radio" name="budget_band" value="$800–$1,500" />
+                $800–$1,500</label
+              >
+              <label class="radio"
+                ><input type="radio" name="budget_band" value="$1,500–$3,000" />
+                $1,500–$3,000</label
+              >
+              <label class="radio"
+                ><input type="radio" name="budget_band" value="$3,000+" /> $3,000+</label
+              >
+              <label class="radio"
+                ><input type="radio" name="budget_band" value="Not sure yet" /> Not sure
+                yet</label
+              >
+            </fieldset>
+
+            <div class="optional-block">
+              <p class="optional-label">Optional context</p>
+              <div class="field">
+                <label for="mcp-url">MCP URL</label>
+                <input
+                  id="mcp-url"
+                  name="mcp_url"
+                  type="url"
+                  placeholder="https://…"
+                />
+              </div>
+              <fieldset class="field check-group">
+                <legend>Clients you care about</legend>
+                <label class="check"
+                  ><input type="checkbox" name="clients" value="Cursor" /> Cursor</label
+                >
+                <label class="check"
+                  ><input type="checkbox" name="clients" value="VS Code" /> VS Code</label
+                >
+                <label class="check"
+                  ><input type="checkbox" name="clients" value="Claude Desktop" /> Claude
+                  Desktop</label
+                >
+                <label class="check"
+                  ><input type="checkbox" name="clients" value="Claude Code" /> Claude
+                  Code</label
+                >
+              </fieldset>
+            </div>
+
+            <p class="form-error" id="form-error" hidden></p>
+            <button class="btn primary submit" type="submit" id="submit-btn">
+              Send my score &amp; answers
+            </button>
+            <p class="form-hint">
+              Delivers to thespencerlowe@gmail.com via formsubmit.co (or Formspree if
+              configured).
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <section class="audience" id="fit">
+        <div class="wrap split">
+          <div>
+            <h2>Who for</h2>
+            <p>MCP server authors shipping OAuth/remote MCP.</p>
+          </div>
+          <div>
+            <h2>Who not</h2>
+            <p>Readers with no server URL.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>Demand test — packaging unproven. Capture: thespencerlowe@gmail.com</p>
+        <p class="privacy">
+          Answers are used only to reply about CompatLab Ship packs and retests. We do not
+          sell or rent your details. No SOLVD branding.
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
