@@ -50,12 +50,13 @@ function syncScore() {
   }
 
   if (result.complete) {
-    scoreTotalEl.textContent = `${result.total} / 100`;
+    const scored = `${result.total}\u00a0/\u00a0100`;
+    scoreTotalEl.textContent = scored;
     scoreBandEl.textContent = result.band;
     scoreBandEl.dataset.band = result.band;
     scoreInvite.hidden = false;
-    scoreFinalEl.textContent = `${result.total} / 100`;
-    scoreInviteText.textContent = `Your MCP Client Readiness Score is ${result.total} / 100 — ${result.band}. Share this self-assessment with the waitlist form.`;
+    scoreFinalEl.textContent = scored;
+    scoreInviteText.textContent = `Your MCP Client Readiness Score is ${scored} — ${result.band}. Share this self-assessment with the waitlist form.`;
     scoreTotalField.value = String(result.total);
     scoreVectorField.value = result.vector;
     sourceField.value = "compatlab-scorecard";
